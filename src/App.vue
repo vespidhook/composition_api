@@ -1,48 +1,45 @@
 <template>
   <h1>Composition API</h1>
-  <b>Name:</b> {{ user.name }} <br />
-  <b>Age:</b> {{ user.age }} <br />
-  <br><br>
-
+  <b>Name:</b> {{ user.first_name }} {{ user.last_name }} <br />
   <input
-    v-model="user.name"
-    type="text"
-  />
-  <button @click="changeName">Alterar nome</button>
-
-  <br><br>
-  <b>Product:</b> {{ product }} <br>
-  <input
-      v-model="product"
       type="text"
+      v-model="user.first_name"
   />
-  <button @click="changeProduct">Alterar nome do produto</button>
 
+  <button @click="changeName">Alterar nome</button>
 </template>
 
 <script>
-import {ref} from 'vue'
+import {ref, watch} from 'vue'
   export default {
     setup() {
-      const product = ref('Iphone')
       const user = ref({
-        name: 'John',
-        age: 30
+        first_name: 'John',
+        last_name: 'Doe'
       })
 
-      function changeName() {
-        user.value.name = 'Bruno Alves'
+      watch(name, (value, oldValue) => {
+        console.log('Name changed from', oldValue, 'to', value)
+        alert()
+      }, {
+        imemediate: true,
+        deep: true
+      })
+
+      function alert() {
+        console.log('Alert')
       }
 
-      function changeProduct() {
-        product.value = 'Samsung'
+      function changeName() {
+        user.value = {
+          first_name: 'Sansa',
+          last_name: 'Stark'
+        }
       }
 
       return {
         user,
-        changeName,
-        product,
-        changeProduct
+        changeName
       }
     }
   }
