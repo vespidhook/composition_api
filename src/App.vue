@@ -1,39 +1,32 @@
 <template>
   <h1>Composition API</h1>
+  {{ todoId }} <br>
   <input
-      type="text"
-      v-model="name"
+    v-model="todoId"
+    type="text"
   />
 
-  <br>
-
-  <input
-      type="text"
-      v-model="address"
-  />
 </template>
 
 <script>
-import {ref, watch} from 'vue'
+import { ref, watch, watchEffect } from 'vue'
+
   export default {
     setup() {
-      const name = ref('John')
-      const address = ref('Rua A, quadra B 000000')
+      const todoId = ref(1);
 
-      watch([name, address], (newValue, oldValue) => {
-        console.log(newValue, oldValue)
-        action()
+      // watch(todoId, (vl) => {
+      //   console.log('todo', vl);
+      // })
+
+      watchEffect(() => {
+        fetch(`https://jsonplaceholder.typicode.com/todos/${todoId.value}`)
+          .then(response => response.json())
+          .then(json => console.log(json))
       })
 
-
-
-      function action() {
-        console.log('Action')
-      }
-
       return {
-        name,
-        address
+        todoId
       }
     }
   }
