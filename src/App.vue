@@ -1,19 +1,11 @@
 <template>
+  <AppHeader />
   <h1>Composition API</h1>
-  <button @click="show = !show">Mostrar componente</button>
-  <User
-      v-if="show"
-      :user="user"
-  />
+  <Counter />
 </template>
 
 <script setup>
-  import User from "./components/User.vue";
-  import {ref} from "vue";
+import Counter from "@/components/Counter.vue";
+import AppHeader from "@/components/AppHeader.vue";
 
-  const show = ref(true)
-
-  const user = ref({
-    first_name: 'John',
-  })
 </script>
